@@ -4,8 +4,6 @@
 #include "mandelbrot.h"
 
 const bool multithreading = true;
-const float zoomFactor = 1.1f;
-
 
 /* --Vereinfachte Schreibweise. */
 using Complex = std::complex<double>;
@@ -19,7 +17,7 @@ int main() {
 	unsigned int window_width = sf::VideoMode::getDesktopMode().width;
 	unsigned int window_height = sf::VideoMode::getDesktopMode().height;
 
-	sf::RenderWindow window(sf::VideoMode(window_width, window_height), "Kochsche Kurve", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(window_width, window_height), "Mandelbrot", sf::Style::Fullscreen);
 
     Mandelbrot MB = Mandelbrot(c0, c1);
 
