@@ -15,8 +15,10 @@ public:
 
 	// berechne einen ausschitt
 	// wird von der jetzigen version genutzt um multithreading zu realisieren
-	void calculatePartial(sf::VertexArray& pixels, const sf::Rect<float>& area,
-						unsigned int startY, unsigned int endY, unsigned char iterations) const;
+	void calculatePartial(	sf::VertexArray& pixels, 
+							const sf::Rect<float>& area, 
+							unsigned int startY, unsigned int endY, 
+							unsigned char iterations) const;
 
 	/* --Setze das Berechnungsgebiet. */
 	void set(const Complex& c0, const Complex& c1) { _c0 = c0; _c1 = c1; }

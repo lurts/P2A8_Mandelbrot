@@ -45,12 +45,11 @@ sf::VertexArray Mandelbrot::calculate(const sf::Rect<float>& area, unsigned char
 			// anzahl iterationen bestimmen
 			unsigned char count = iterate(c, iterations);
 
-			// anzahl iterationen auf 0..359 skalieren
-			unsigned int iterationsScaled = 360 - count * (360 / iterations);
+			// auf log skala skalieren
+			float countScaled = std::log(count) / std::log(iterations);
+			unsigned int iterationsScaled = countScaled * 360;
 
-			// farbe bestimmen
-			sf::Color colour = hsvToColor(iterationsScaled, 1, 1);
-			//sf::Color colour = sf::Color(count, count, count);
+			sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
 
 			// Setze den Pixel
 			pixels[py * width + px] = sf::Vertex(sf::Vector2f(px, py), colour);
@@ -60,21 +59,28 @@ sf::VertexArray Mandelbrot::calculate(const sf::Rect<float>& area, unsigned char
 	return pixels;
 }
 
-void Mandelbrot::calculatePartial(sf::VertexArray& pixels, const sf::Rect<float>& area,
-	unsigned int startY, unsigned int endY, unsigned char iterations) const {
+void Mandelbrot::calculatePartial(	sf::VertexArray& pixels, 
+									const sf::Rect<float>& area, 
+									unsigned int startY, 
+									unsigned int endY, 
+									unsigned char iterations) const {
 	for (unsigned int py = startY; py < endY; ++py) {
 		for (unsigned int px = 0; px < area.width; ++px) {
+			// von pixelkoordinaten zu komplex-koordinaten transformieren
 			double real = _c0.real() + (px / area.width) * (_c1.real() - _c0.real());
 			double imag = _c0.imag() + (py / area.height) * (_c1.imag() - _c0.imag());
 			Complex c(real, imag);
 
+			// anzahl iterationen bestimmen
 			unsigned char count = iterate(c, iterations);
 
-			unsigned int iterationsScaled = count * (360 / iterations);
+			// log skala
+			float countScaled = std::log(count) / std::log(iterations);
+			unsigned int iterationsScaled = countScaled * 360;
+
 			sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
 
-			//sf::Color colour = sf::Color(count, count, count);
-
+			// pixel setzen
 			pixels[py * area.width + px] = sf::Vertex(sf::Vector2f(px, py), colour);
 		}
 	}
