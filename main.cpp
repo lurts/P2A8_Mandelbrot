@@ -8,8 +8,8 @@ const bool multithreading = true;
 /* --Vereinfachte Schreibweise. */
 using Complex = std::complex<double>;
 
-Complex c0 = { -2.0,1.0 };
-Complex c1 = { 1.0,-1.0 };
+Complex c0 = { -2.0, 1.0 };
+Complex c1 = { 1.0, -1.0 };
 
 
 int main() {
