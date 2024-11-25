@@ -70,10 +70,10 @@ void Mandelbrot::calculatePartial(sf::VertexArray& pixels, const sf::Rect<float>
 
 			unsigned char count = iterate(c, iterations);
 
-			//unsigned int iterationsScaled = count * (360 / iterations);
-			//sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
+			unsigned int iterationsScaled = count * (360 / iterations);
+			sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
 
-			sf::Color colour = sf::Color(count, count, count);
+			//sf::Color colour = sf::Color(count, count, count);
 
 			pixels[py * area.width + px] = sf::Vertex(sf::Vector2f(px, py), colour);
 		}
