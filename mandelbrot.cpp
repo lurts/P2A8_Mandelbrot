@@ -80,11 +80,15 @@ void Mandelbrot::calculatePartial(	sf::VertexArray& pixels,
 			unsigned char count = iterate(c, iterations);
 
 			// log skala
-			float countScaled = std::log(count) / std::log(iterations);
-			unsigned int iterationsScaled = countScaled * 360;
+			float countLogScaled = std::log(count) / std::log(iterations);
 
-			//sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
-            sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
+			float iterationsScaled = countLogScaled * 360.0f;
+
+            // full RGB
+			sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
+
+            // black and white
+            //sf::Color colour = hsvToColor(iterationsScaled, 0.0f, countLogScaled);
 
 			// pixel setzen
 			pixels[py * area.width + px] = sf::Vertex(sf::Vector2f(px, py), colour);
@@ -95,7 +99,6 @@ void Mandelbrot::calculatePartial(	sf::VertexArray& pixels,
 unsigned char Mandelbrot::iterate(const Complex& c, unsigned char iterations) const {
 	// startwert Z0 = 0
 	Complex z = 0;
-
 	unsigned char count = 0;
 
 	while ((std::abs(z) <= 2.0f) && (count < iterations)) {

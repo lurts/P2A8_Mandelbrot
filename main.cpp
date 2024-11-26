@@ -13,7 +13,7 @@ Complex c1 = { 1.0, -1.0 };
 
 
 int main() {
-	// fenstergröße auf maximale auflösung des bildschirms setzen
+	// fenstergrï¿½ï¿½e auf maximale auflï¿½sung des bildschirms setzen
 	unsigned int window_width = sf::VideoMode::getDesktopMode().width;
 	unsigned int window_height = sf::VideoMode::getDesktopMode().height;
 
@@ -58,7 +58,7 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            // Esc soll fenster schließen und programm beenden
+            // Esc soll fenster schlieï¿½en und programm beenden
             if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Escape) {
