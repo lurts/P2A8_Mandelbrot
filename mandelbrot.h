@@ -1,4 +1,8 @@
-#pragma once
+//#pragma once
+
+#ifndef MANDELBROT_H
+#define MANDELBROT_H
+
 #include <ccomplex>
 #include "SFML/Graphics.hpp"
 
@@ -28,7 +32,8 @@ private:
 	Complex _c0;
 	Complex _c1;
 
-	/* --Liefert Anzahl der Iterationen zurück. */
+	/* --Liefert Anzahl der Iterationen zurï¿½ck. */
 	unsigned char iterate(const Complex& c, unsigned char iterations = 255) const;
 };
 
+#endif
