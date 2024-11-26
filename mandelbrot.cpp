@@ -3,10 +3,15 @@
 /* --Vereinfachte Schreibweise. */
 using Complex = std::complex<double>;
 
-// zusätzliche funktion um farben zu konvertieren
-// großteil von ChatGPT aber mit einigen anpassungen
+// zusï¿½tzliche funktion um farben zu konvertieren
+// groï¿½teil von ChatGPT aber mit einigen anpassungen
 sf::Color hsvToColor(float h, float s, float v) {
 	float r = 0, g = 0, b = 0;
+
+    // werte in gÃ¼ltigen bereich clampen
+    h = (h < 0.0f) ? 0.0f : (h > 360.0f ? 360.0f : h); // h in [0, 360]
+    s = (s < 0.0f) ? 0.0f : (s > 1.0f ? 1.0f : s);    // s in [0, 1]
+    v = (v < 0.0f) ? 0.0f : (v > 1.0f ? 1.0f : v);    // v in [0, 1]
 
 	int i = static_cast<int>(h / 60.0f);
 	float f = (h / 60.0f) - i;
@@ -29,7 +34,7 @@ sf::Color hsvToColor(float h, float s, float v) {
 
 
 sf::VertexArray Mandelbrot::calculate(const sf::Rect<float>& area, unsigned char iterations) const {
-	// größe des bereichs in pixeln
+	// grï¿½ï¿½e des bereichs in pixeln
 	float width = area.width;
 	float height = area.height;
 
@@ -78,7 +83,8 @@ void Mandelbrot::calculatePartial(	sf::VertexArray& pixels,
 			float countScaled = std::log(count) / std::log(iterations);
 			unsigned int iterationsScaled = countScaled * 360;
 
-			sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
+			//sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
+            sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
 
 			// pixel setzen
 			pixels[py * area.width + px] = sf::Vertex(sf::Vector2f(px, py), colour);
