@@ -85,5 +85,12 @@ jobs:
       with:
         name: windows-binaries
         path: ${{ steps.strings.outputs.build-output-dir }}/Release/*.exe  # Upload .exe files in the Release folder
-
-
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          ${{ steps.strings.outputs.build-output-dir }}/Release/*.exe  # For Windows
+          ${{ steps.strings.outputs.build-output-dir }}/P2A8_Mandelbrot  # For Linux
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
