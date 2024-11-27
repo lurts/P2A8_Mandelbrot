@@ -1,6 +1,9 @@
 ## This is what the output looks like
+![Mandelbrot](pictures/mandelbrot-1.png)
+<sup>at default zoom</sup>
 
-![Mandelbrot](https://github.com/lurts/P2A8_Mandelbrot/blob/master/pictures/mandelbrot-1.png)
+![Mandelbrot Zoomed in](pictures/mandelbrot_zoomed.png)
+<sup>zoomed in a little</sup>
 
 - multithreaded
 - zooming via mousewheel
