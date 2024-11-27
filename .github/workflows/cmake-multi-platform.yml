@@ -89,6 +89,7 @@ jobs:
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: "v${{ github.sha }}"  # Uses the latest commit hash as the tag
         files: |
           ${{ steps.strings.outputs.build-output-dir }}/Release/*.exe  # For Windows
           ${{ steps.strings.outputs.build-output-dir }}/P2A8_Mandelbrot  # For Linux
