@@ -84,4 +84,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: compiled-binaries
-        path: ${{ steps.strings.outputs.build-output-dir }}/bin/**
+        path: ${{ steps.strings.outputs.build-output-dir }}/bin
