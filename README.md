@@ -18,8 +18,3 @@ A simple, multithreaded Mandelbrot set viewer with zoom functionality and improv
 
 ## Planned features:
 - experiment with different scales and add a way to switch scales
-
-## LICENSE & Contributing
-This project is licensed under the **Creative Commons Zero v1.0 Universal** (CC0) license. Feel free to use, modify, and distribute the code without any restrictions.
-
-Learn more about CC0 [here](https://creativecommons.org/publicdomain/zero/1.0/).
