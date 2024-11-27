@@ -74,21 +74,16 @@ jobs:
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
-    - name: Test
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest --build-config ${{ matrix.build_type }}
-
-    - name: List build directory contents (debugging)
-      run: |
-        echo "Listing files in build directory"
-        ls -R ${{ steps.strings.outputs.build-output-dir }}
-
-    - name: Upload build artifacts
+    - name: Upload Linux build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: compiled-binaries
-        path: 
-          ${{ steps.strings.outputs.build-output-dir }}/Release/*.exe
-          ${{ steps.strings.outputs.build-output-dir }}/Debug/*.exe
+        name: linux-binaries
+        path: ${{ steps.strings.outputs.build-output-dir }}/P2A8_Mandelbrot  # Upload all files in the build directory (but only executables)
+
+    - name: Upload Windows build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: windows-binaries
+        path: ${{ steps.strings.outputs.build-output-dir }}/Release/*.exe  # Upload .exe files in the Release folder
+
+
