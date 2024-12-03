@@ -9,7 +9,7 @@
 class Mandelbrot {
 public:
 	/* --Vereinfachte Schreibweise. */
-	using Complex = std::complex<double>;
+	using Complex = std::complex<long double>;
 
 	/* --Konstruktor mit Rechteck (Rechengebiet). */
 	Mandelbrot(const Complex& c0, const Complex& c1) :_c0(c0), _c1(c1) {}
@@ -34,6 +34,8 @@ private:
 
 	/* --Liefert Anzahl der Iterationen zur�ck. */
 	unsigned char iterate(const Complex& c, unsigned char iterations = 255) const;
+
+	unsigned char fastIterate(const Complex& c, unsigned char iterations = 255) const;
 };
 
 #endif

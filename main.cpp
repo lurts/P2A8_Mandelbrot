@@ -7,7 +7,7 @@ const bool multithreading = true;
 float zoomFactor = 1.5f;
 
 /* --Vereinfachte Schreibweise. */
-using Complex = std::complex<double>;
+using Complex = std::complex<long double>;
 
 Complex c0 = { -2.0, 1.0 };
 Complex c1 = { 1.0, -1.0 };

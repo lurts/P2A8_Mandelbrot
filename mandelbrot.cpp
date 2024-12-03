@@ -1,7 +1,7 @@
 #include "mandelbrot.h"
 
 /* --Vereinfachte Schreibweise. */
-using Complex = std::complex<double>;
+using Complex = std::complex<long double>;
 
 // zus�tzliche funktion um farben zu konvertieren
 // gro�teil von ChatGPT aber mit einigen anpassungen
@@ -77,7 +77,7 @@ void Mandelbrot::calculatePartial(	sf::VertexArray& pixels,
 			Complex c(real, imag);
 
 			// anzahl iterationen bestimmen
-			unsigned char count = iterate(c, iterations);
+			unsigned char count = fastIterate(c, iterations);
 
 			// log skala
 			float countLogScaled = std::log(count) / std::log(iterations);
@@ -108,6 +108,24 @@ unsigned char Mandelbrot::iterate(const Complex& c, unsigned char iterations) co
 
 	while ((std::abs(z) <= 2.0f) && (count < iterations)) {
 		z = z * z + c;
+		count++;
+	}
+
+	return count;
+}
+
+unsigned char Mandelbrot::fastIterate(const Complex& c, unsigned char iterations) const {
+	// Start with Z0 = 0 + 0i
+	long double zr = 0.0, zi = 0.0;
+	long double real = c.real();
+	long double imag = c.imag();
+	unsigned char count = 0;
+
+	while ((zr * zr + zi * zi <= 4.0) && (count < iterations)) {
+		// z = z * z + c
+		double temp = zr * zr - zi * zi + real;
+		zi = 2.0 * zr * zi + imag;
+		zr = temp;
 		count++;
 	}
 
