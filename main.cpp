@@ -72,47 +72,51 @@ int main() {
                 if (event.key.code == sf::Keyboard::Escape) {
                     window.close();
                 }
+
+                if (event.key.code == sf::Keyboard::Subtract || event.key.code == sf::Keyboard::Add) {
+                    // zoom richtung und maus position bestimmen
+                    float zoomFactorDirectional = (event.key.code == sf::Keyboard::Add)
+                                                  ? 1.0f / zoomFactor
+                                                  : zoomFactor;
+                    sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
+
+                    // umrechnung auf komplexe koordinaten
+                    Complex zoomCenter = {
+                            c0.real() + (c1.real() - c0.real()) * (mousePos.x / window_width),
+                            c0.imag() + (c1.imag() - c0.imag()) * (mousePos.y / window_height)
+                    };
+
+                    double newWidth = (c1.real() - c0.real()) * zoomFactorDirectional;
+                    double newHeight = (c1.imag() - c0.imag()) * zoomFactorDirectional;
+
+                    // Setze neuen Bereich
+                    c0 = Complex(zoomCenter.real() - newWidth / 2.0, zoomCenter.imag() - newHeight / 2.0);
+                    c1 = Complex(zoomCenter.real() + newWidth / 2.0, zoomCenter.imag() + newHeight / 2.0);
+
+                    MB.set(c0, c1);
+
+                    // threads neu starten
+                    for (auto& thread : threads) {
+                        if (thread.joinable()) {
+                            thread.join();  // Warten, bis der Thread beendet ist
+                        }
+                    }
+                    threads.clear();  // Jetzt ist es sicher, die Liste zu leeren
+
+                    for (unsigned int t = 0; t < numThreads; ++t) {
+                        // start und endpunkt für neuen thread bestimmen
+                        unsigned int startY = t * rowsPerThread;
+                        // letzter thread bekommt als endwert einfach "window_height"
+                        // wird gebraucht falls "window_height" nicht genau durch die anzahl der threads teilbar ist
+                        unsigned int endY = (t == numThreads - 1) ? window_height : startY + rowsPerThread;
+
+                        threads.emplace_back(&Mandelbrot::calculatePartial, &MB, std::ref(VA), std::ref(area), startY, endY, 255);
+                    }
+                }
             }
 
             if (event.type == sf::Event::MouseWheelScrolled) {
-                // zoom richtung und maus position bestimmen
-                float zoomFactorDirectional = (event.mouseWheelScroll.delta > 0)
-                    ? 1.0f / zoomFactor
-                    : zoomFactor;
-                sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
 
-                // umrechnung auf komplexe koordinaten
-                Complex zoomCenter = {
-                    c0.real() + (c1.real() - c0.real()) * (mousePos.x / window_width),
-                    c0.imag() + (c1.imag() - c0.imag()) * (mousePos.y / window_height)
-                };
-
-                double newWidth = (c1.real() - c0.real()) * zoomFactorDirectional;
-                double newHeight = (c1.imag() - c0.imag()) * zoomFactorDirectional;
-
-                // Setze neuen Bereich
-                c0 = Complex(zoomCenter.real() - newWidth / 2.0, zoomCenter.imag() - newHeight / 2.0);
-                c1 = Complex(zoomCenter.real() + newWidth / 2.0, zoomCenter.imag() + newHeight / 2.0);
-
-                MB.set(c0, c1);
-
-                // threads neu starten
-                for (auto& thread : threads) {
-                    if (thread.joinable()) {
-                        thread.join();  // Warten, bis der Thread beendet ist
-                    }
-                }
-                threads.clear();  // Jetzt ist es sicher, die Liste zu leeren
-
-                for (unsigned int t = 0; t < numThreads; ++t) {
-                    // start und endpunkt für neuen thread bestimmen
-                    unsigned int startY = t * rowsPerThread;
-                    // letzter thread bekommt als endwert einfach "window_height"
-                    // wird gebraucht falls "window_height" nicht genau durch die anzahl der threads teilbar ist
-                    unsigned int endY = (t == numThreads - 1) ? window_height : startY + rowsPerThread;
-
-                    threads.emplace_back(&Mandelbrot::calculatePartial, &MB, std::ref(VA), std::ref(area), startY, endY, 255);
-                }
             }
         }
 
