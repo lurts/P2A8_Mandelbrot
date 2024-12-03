@@ -85,10 +85,15 @@ void Mandelbrot::calculatePartial(	sf::VertexArray& pixels,
 			float iterationsScaled = countLogScaled * 360.0f;
 
             // full RGB
-			sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
+			//sf::Color colour = hsvToColor(iterationsScaled, 1.0f, 1.0f);
 
             // black and white
             //sf::Color colour = hsvToColor(iterationsScaled, 0.0f, countLogScaled);
+
+			// blau monochrom
+			sf::Color colour = hsvToColor(	240.0f, 
+											1-countLogScaled, 
+											(count == iterations) ? 0.0f : countLogScaled);
 
 			// pixel setzen
 			pixels[py * area.width + px] = sf::Vertex(sf::Vector2f(px, py), colour);
