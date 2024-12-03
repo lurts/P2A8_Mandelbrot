@@ -1,10 +1,20 @@
-## This is what the output looks like
+# Mandelbrot Viewer
+![Mandelbrot Zoomed In](pictures/mandelbrot_zoomed.png)
+<sup>Zoomed in a little</sup>
 
-![Mandelbrot](https://github.com/lurts/P2A8_Mandelbrot/blob/master/pictures/mandelbrot-1.png)
+A simple, multithreaded Mandelbrot set viewer with zoom functionality and improved contrast through a logarithmic scale.
 
-- multithreaded
-- zooming via mousewheel
-- uses a logarithmic scale to increase contrast and detail
+---
 
-## TODO:
+## Features
+#### Multithreaded processing
+- the program automatically allocates a number of threads based on your systems capabilities to decrease render times
+#### Zooming with mouse wheel
+- scrolling anywhere in the picture will zoom in centered on your mouse cursor
+#### Logarithmic scale
+- I chose a logarithmic scale to make small changes more visible. It also looks pretty cool in my opinion
+
+---
+
+## Planned features:
 - experiment with different scales and add a way to switch scales
